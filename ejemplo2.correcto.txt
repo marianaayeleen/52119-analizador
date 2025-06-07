@@ -1,0 +1,8 @@
+variable texto = "Hola";
+variable resultado = minusculas(texto);
+
+funcion procesar() {
+  variable invertido = invertir(resultado);
+  imprimir(invertido);
+  devolver invertido;
+}

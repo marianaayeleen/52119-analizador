@@ -1,4 +1,4 @@
-// Generated from c:/Users/maria/Desktop/Analizador recuperatorio/ssl-antlr-calculator/Calculator.g4 by ANTLR 4.13.1
+// Generated from c:/Users/maria/Desktop/Analizador recuperatorio/ssl-antlr-calculator/analizador.g4 by ANTLR 4.13.1
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.*;
@@ -9,7 +9,7 @@ import java.util.Iterator;
 import java.util.ArrayList;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast", "CheckReturnValue"})
-public class CalculatorParser extends Parser {
+public class analizadorParser extends Parser {
 	static { RuntimeMetaData.checkVersion("4.13.1", RuntimeMetaData.VERSION); }
 
 	protected static final DFA[] _decisionToDFA;
@@ -84,7 +84,7 @@ public class CalculatorParser extends Parser {
 	}
 
 	@Override
-	public String getGrammarFileName() { return "Calculator.g4"; }
+	public String getGrammarFileName() { return "analizador.g4"; }
 
 	@Override
 	public String[] getRuleNames() { return ruleNames; }
@@ -95,14 +95,14 @@ public class CalculatorParser extends Parser {
 	@Override
 	public ATN getATN() { return _ATN; }
 
-	public CalculatorParser(TokenStream input) {
+	public analizadorParser(TokenStream input) {
 		super(input);
 		_interp = new ParserATNSimulator(this,_ATN,_decisionToDFA,_sharedContextCache);
 	}
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class ProgramaContext extends ParserRuleContext {
-		public TerminalNode EOF() { return getToken(CalculatorParser.EOF, 0); }
+		public TerminalNode EOF() { return getToken(analizadorParser.EOF, 0); }
 		public List<DeclaracionContext> declaracion() {
 			return getRuleContexts(DeclaracionContext.class);
 		}
@@ -770,7 +770,7 @@ public class CalculatorParser extends Parser {
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class TextoContext extends ParserRuleContext {
-		public TerminalNode CARACTERES() { return getToken(CalculatorParser.CARACTERES, 0); }
+		public TerminalNode CARACTERES() { return getToken(analizadorParser.CARACTERES, 0); }
 		public TextoContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -804,7 +804,7 @@ public class CalculatorParser extends Parser {
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class NombreContext extends ParserRuleContext {
-		public TerminalNode IDENTIFICADOR() { return getToken(CalculatorParser.IDENTIFICADOR, 0); }
+		public TerminalNode IDENTIFICADOR() { return getToken(analizadorParser.IDENTIFICADOR, 0); }
 		public NombreContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -834,7 +834,7 @@ public class CalculatorParser extends Parser {
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class VariableContext extends ParserRuleContext {
-		public TerminalNode IDENTIFICADOR() { return getToken(CalculatorParser.IDENTIFICADOR, 0); }
+		public TerminalNode IDENTIFICADOR() { return getToken(analizadorParser.IDENTIFICADOR, 0); }
 		public VariableContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -864,7 +864,7 @@ public class CalculatorParser extends Parser {
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class NumeroContext extends ParserRuleContext {
-		public TerminalNode NUMERO() { return getToken(CalculatorParser.NUMERO, 0); }
+		public TerminalNode NUMERO() { return getToken(analizadorParser.NUMERO, 0); }
 		public NumeroContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}

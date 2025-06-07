@@ -1,6 +1,6 @@
-import CalculatorListener from "./generated/CalculatorListener.js";
+import analizadorListener from "./generated/analizadorListener.js";
 
-export class CustomCalculatorListener extends CalculatorListener {
+export class CustomanalizadorListener extends analizadorListener {
 
     enterStat(ctx) {
         console.log(`Se detectó una: ${ctx.constructor.name}`);

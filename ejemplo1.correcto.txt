@@ -1,0 +1,6 @@
+variable saludo = "hola mundo";
+
+funcion saludar(nombre) {
+  imprimir(nombre);
+  devolver nombre;
+}

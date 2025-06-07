@@ -1,62 +1,76 @@
-import CalculatorLexer from "./generated/CalculatorLexer.js";
-import CalculatorParser from "./generated/CalculatorParser.js";
-import { CustomCalculatorListener } from "./CustomCalculatorListener.js";
-import { CustomCalculatorVisitor } from "./CustomCalculatorVisitor.js";
-import antlr4, { CharStreams, CommonTokenStream, ParseTreeWalker } from "antlr4";
-import readline from 'readline';
-import fs from 'fs';
+import antlr4 from "antlr4";
+import analizadorLexer from "./generated/analizadorLexer.js";
+import analizadorParser from "./generated/analizadorParser.js";
+import CustomanalizadorVisitor from "./CustomanalizadorVisitor.js";
+import readline from "readline";
+import fs from "fs";
 
 async function main() {
-    let input;
+  let input;
 
-    // Intento leer la entrada desde el archivo input - en forma sincrona.
-    try {
-        input = fs.readFileSync('input.txt', 'utf8');
-    } catch (err) {
-        // Si no es posible leer el archivo, solicitar la entrada del usuario por teclado
-        input = await leerCadena(); // Simula lectura síncrona
-        console.log(input);
-    }
+  // Intentar leer desde archivo
+  try {
+    input = fs.readFileSync("input.txt", "utf8");
+  } catch (err) {
+    input = await leerCadena();
+    console.log(input);
+  }
 
-    // Proceso la entrada con el analizador e imprimo el arbol de analisis en formato texto
-    let inputStream = CharStreams.fromString(input);
-    let lexer = new CalculatorLexer(inputStream);
-    let tokenStream = new CommonTokenStream(lexer);
-    let parser = new CalculatorParser(tokenStream);
-    let tree = parser.prog();
-    
-    // Verifico si se produjeron errores
-    if (parser.syntaxErrorsCount > 0) {
-        console.error("\nSe encontraron errores de sintaxis en la entrada.");
-    } 
-    else {
-        console.log("\nEntrada válida.");
-        const cadena_tree = tree.toStringTree(parser.ruleNames);
-        console.log(`Árbol de derivación: ${cadena_tree}`);
+  // Paso 1: Lexer
+  let inputStream = antlr4.CharStreams.fromString(input);
+  let lexer = new analizadorLexer(inputStream);
+  let tokens = lexer.getAllTokens();
 
-        // Utilizo un listener y un walker para recorrer el arbol e indicar cada vez que reconoce una sentencia (stat)
-        //const listener = new CustomCalculatorListener();
-        // ParseTreeWalker.DEFAULT.walk(listener, tree);
+  if (tokens.length === 0) {
+    console.error(" No se generaron tokens. Verifica la entrada y la gramática.");
+    return;
+  }
 
-        // Utilizo un visitor para visitar los nodos que me interesan de mi arbol
-        const visitor = new CustomCalculatorVisitor();
-        visitor.visit(tree);   
-    }
+  // Tabla de tokens
+  console.log("\n Tabla de Tokens y Lexemas:");
+  console.log("-----------------------------------------------");
+  console.log("| Lexema          | Token                     |");
+  console.log("-----------------------------------------------");
+  for (let token of tokens) {
+    const tokenType = analizadorLexer.symbolicNames[token.type] || `UNKNOWN(${token.type})`;
+    const lexema = token.text;
+    console.log(`| ${lexema.padEnd(15)} | ${tokenType.padEnd(25)} |`);
+  }
+  console.log("-----------------------------------------------");
+
+  // Paso 2: Parser
+  inputStream = antlr4.CharStreams.fromString(input);
+  lexer = new analizadorLexer(inputStream);
+  let tokenStream = new antlr4.CommonTokenStream(lexer);
+  let parser = new analizadorParser(tokenStream);
+  parser.buildParseTrees = true;
+
+  const tree = parser.programa();
+
+  if (parser._syntaxErrors > 0) {
+    console.error(" Se encontraron errores de sintaxis.");
+  } else {
+    console.log("Entrada válida.");
+    const cadena_tree = tree.toStringTree(parser.ruleNames);
+    console.log(" Árbol de derivación:", cadena_tree);
+
+    const visitor = new CustomanalizadorVisitor();
+    visitor.visit(tree);
+  }
 }
 
 function leerCadena() {
-    const rl = readline.createInterface({
-        input: process.stdin,
-        output: process.stdout
-    });
+  const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout,
+  });
 
-    return new Promise(resolve => {
-        rl.question("Ingrese una cadena: ", (answer) => {
-            rl.close();
-            resolve(answer);
-        });
+  return new Promise((resolve) => {
+    rl.question("Ingrese una cadena: ", (answer) => {
+      rl.close();
+      resolve(answer);
     });
+  });
 }
 
-// Ejecuta la función principal
 main();
